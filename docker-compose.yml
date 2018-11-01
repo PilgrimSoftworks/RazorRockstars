@@ -32,6 +32,7 @@ services:
 
 volumes:
   database:
+    driver: anybox/buttervolume:latest
       
 networks:
   web:
