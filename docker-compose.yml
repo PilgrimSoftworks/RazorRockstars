@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  razor-rockstars:
+    build:
+      context: .
+    labels:
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:rockstars.test.pilgrim.no"
+      - "traefik.enable=true"
+      - "traefik.port=5000"
+      - "traefik.default.protocol=http"
+    ports:
+      - "5000:5000"
+    networks:
+      - web
+      - default
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      MYSQL_ONETIME_PASSWORD: "false"
+      MYSQL_DATABASE: rockstars
+      MYSQL_USER: rockstars
+      MYSQL_PASSWORD: rockstars
+    volumes:
+      - database:/var/lib/mysql
+    networks:
+      - default
+
+volumes:
+  database:
+      
+networks:
+  web:
+    external: true

@@ -73,7 +73,7 @@ namespace RazorRockstars.WebHost
             Plugins.Add(new RazorFormat());
 
             container.Register<IDbConnectionFactory>(
-                new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider));
+                new OrmLiteConnectionFactory("Server=db;Database=rockstars;Uid=rockstars;Pwd=rockstars", MySqlDialect.Provider));
 
             using (var db = container.Resolve<IDbConnectionFactory>().Open())
             {
